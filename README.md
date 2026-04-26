@@ -99,6 +99,15 @@ The vendored copy in `.claude/skills/` gives you a pinned, offline-ready version
 
 ## 🏁 Quick Start
 
+### Step 0: Get the starter kit
+
+```bash
+git clone https://github.com/MadeByAdem/developer-starter-kit.git
+cd developer-starter-kit
+```
+
+Or [download the ZIP](https://github.com/MadeByAdem/developer-starter-kit/archive/refs/heads/main.zip), unzip it, and open a terminal inside the folder.
+
 ### Option A: Global setup
 
 Install agents, boilerplates, references, and skills once — use them in every project.
@@ -114,8 +123,8 @@ cp .claude/references/* ~/.claude/references/
 cp -r .claude/skills/* ~/.claude/skills/
 
 # For each new project:
-mkdir my-project && cd my-project
-cp /path/to/developer-starter-kit/CLAUDE.md .
+mkdir ~/my-project && cd ~/my-project
+cp ~/developer-starter-kit/CLAUDE.md .
 ```
 
 **Windows (PowerShell):**
@@ -133,7 +142,7 @@ Copy-Item -Recurse .claude\skills\* "$env:USERPROFILE\.claude\skills\"
 
 # For each new project:
 mkdir my-project; cd my-project
-Copy-Item \path\to\developer-starter-kit\CLAUDE.md .
+Copy-Item $env:USERPROFILE\developer-starter-kit\CLAUDE.md .
 ```
 
 > **Note:** Globally installed skills are available across all projects. Scripts like `~/.claude/skills/ui-ux-pro-max/scripts/search.py` can be called from anywhere.
@@ -147,17 +156,17 @@ Copy everything into each new project. The easiest way is to open both folders s
 **Mac/Linux:**
 
 ```bash
-mkdir my-project && cd my-project
-cp /path/to/developer-starter-kit/CLAUDE.md .
-cp -r /path/to/developer-starter-kit/.claude .
+mkdir ~/my-project && cd ~/my-project
+cp ~/developer-starter-kit/CLAUDE.md .
+cp -r ~/developer-starter-kit/.claude .
 ```
 
 **Windows (PowerShell):**
 
 ```powershell
 mkdir my-project; cd my-project
-Copy-Item \path\to\developer-starter-kit\CLAUDE.md .
-Copy-Item -Recurse \path\to\developer-starter-kit\.claude .
+Copy-Item $env:USERPROFILE\developer-starter-kit\CLAUDE.md .
+Copy-Item -Recurse $env:USERPROFILE\developer-starter-kit\.claude .
 ```
 
 > The `.claude/` folder contains agents, boilerplates, references, **and** the UI/UX Pro Max skill bundle — all copied in one go.
