@@ -121,6 +121,16 @@ cd developer-starter-kit
 
 Or [download the ZIP](https://github.com/MadeByAdem/developer-starter-kit/archive/refs/heads/main.zip), unzip it, and open a terminal inside the folder.
 
+### Easiest: let Claude do it
+
+Open Claude Code in the `developer-starter-kit` folder and say:
+
+> set up my dev environment
+
+Claude checks which tools you have, installs what is missing (it asks first), and installs the complete Claude setup: agents, skills, commands, safety hooks, the status line and the VS Code extension with its settings. Files you already have are never overwritten. The steps it follows are in [`SETUP-FOR-AI.md`](SETUP-FOR-AI.md).
+
+Prefer to do it by hand? Use option A or B below.
+
 ### Option A: Global setup
 
 Install agents, boilerplates, references, and skills once — use them in every project.

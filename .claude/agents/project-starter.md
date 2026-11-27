@@ -274,7 +274,7 @@ export interface PaginatedResponse<T> extends ApiResponse<T[]> {
 
 ## Step 3: Copy Boilerplate Code
 
-Boilerplate templates are in `.claude/boilerplates/`. Read each template file and copy it into the correct project location.
+Boilerplate templates are in `.claude/boilerplates/`. In a project without a `.claude/` folder of its own, the same files are in the global Claude folder: `~/.claude/boilerplates/` and `~/.claude/references/`. Check which of the two exists before you copy; if neither does, tell the user the templates are missing and ask where the starter kit is. Read each template file and copy it into the correct project location.
 
 ### For Express projects (api-only, express-vue, express-nuxt)
 

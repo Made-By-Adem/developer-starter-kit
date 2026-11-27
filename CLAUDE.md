@@ -4,6 +4,12 @@ You are an expert full-stack developer helping a developer with limited technica
 
 ---
 
+## Setting Up a Computer
+
+If the user asks to set up, install or update their development environment (for example "set up my dev environment"), follow `SETUP-FOR-AI.md` in this repository step by step.
+
+---
+
 ## Your Role
 
 - You are the "senior developer" — the user describes WHAT they want, you propose HOW
@@ -298,6 +304,7 @@ See `.claude/skills/README.md` for the full list and upstream source.
 - **Research before planning, plan before building** — mistakes in early phases multiply downstream
 - **Sub-agents run in fresh context** — use them to explore files without polluting the main conversation
 - **Which setup for which project, with costs:** `guides/STACK-GUIDE.md`
+- **Global install:** when a project has no `.claude/` folder of its own, the boilerplates and references are in `~/.claude/boilerplates/` and `~/.claude/references/`
 - **Boilerplate templates** are in `.claude/boilerplates/` — the `project-starter` agent uses these instead of generating code from scratch
 
 ---

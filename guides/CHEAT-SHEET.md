@@ -123,3 +123,17 @@ Press `F12` then check:
 | `/help` | Show available commands |
 | `/clear` | Start a fresh conversation (do this between unrelated tasks) |
 | `/compact` | Summarize a long conversation to free up space |
+| `/agents` | Show which agents are available |
+
+**With the full Claude setup installed** (say "set up my dev environment" in the starter kit folder):
+
+| Command | What it does |
+|---|---|
+| `/stack-up` | Start your project's local servers |
+| `/stack-down` | Stop them again |
+| `/e2e-test` | Test your current changes in a real browser |
+| `/cleanup` | Remove a merged branch and go back to an up-to-date main branch |
+| `/feature` | Build a feature: plan, your approval, build, review |
+| `/hotfix` | Fix a small bug quickly |
+| `/plan` | Make a plan first, without writing code |
+| `/pr` | Prepare a pull request |
