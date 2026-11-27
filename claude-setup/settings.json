@@ -42,6 +42,17 @@
           }
         ]
       }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"$HOME/.claude/hooks/verify-claim.cjs\"",
+            "timeout": 10
+          }
+        ]
+      }
     ]
   },
   "statusLine": {

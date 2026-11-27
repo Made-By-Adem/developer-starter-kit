@@ -13,10 +13,10 @@ already have and never overwrites your own files.
 | Path | Goes to | What it is |
 |------|---------|------------|
 | `CLAUDE.md` | `~/.claude/CLAUDE.md` | Instructions for every project: which workflow for which task, and a few hard safety rules |
-| `settings.json` | merged into `~/.claude/settings.json` | Permissions, the three hooks and the status line |
-| `skills/` | `~/.claude/skills/` | 18 skills (see below) |
+| `settings.json` | merged into `~/.claude/settings.json` | Permissions, the four hooks and the status line |
+| `skills/` | `~/.claude/skills/` | 27 skills (see below) |
 | `commands/` | `~/.claude/commands/` | 5 slash commands (see below) |
-| `hooks/` | `~/.claude/hooks/` | 3 safety hooks (need Node.js) |
+| `hooks/` | `~/.claude/hooks/` | 4 hooks (need Node.js) |
 | `statusline.sh` | `~/.claude/statusline.sh` | Two-line status line (needs bash, Node.js and git) |
 | `vscode-settings.json` | merged into your VS Code user settings | Settings for the Claude Code extension |
 
@@ -47,6 +47,20 @@ On Windows, `~` is your user folder: `C:\Users\<you>`.
 | `release-notes` | A changelog from Git history |
 | `upgrade-deps` | Updating packages safely, in small groups |
 | `i18n-check` | Finding missing translations |
+| `science` | Debugging a bug with an unknown cause: several explanations first, then the cheapest test that tells them apart |
+| `root-cause` | Finding out afterwards why something failed, and what prevents it next time |
+| `threat-model` | Mapping what could go wrong security-wise before you build: data, entry points, risks |
+| `property-test` | Testing a rule on hundreds of generated inputs to find bugs your example tests miss |
+| `research` | Looking something up on the web, with every link checked |
+| `red-team` | Having your plan attacked to find the flaw that would sink it |
+| `council` | A short debate between four experts to choose between options |
+| `first-principles` | Sorting real limits from habits, then rebuilding the solution |
+| `visualize` | Drawing a flow, a request path or a database as a diagram |
+
+The planning skills (`plan`, `feature`, `hotfix`, `review`) work with **"Done when"
+criteria**: before any code is written, the plan says how you will know it is finished,
+what must not happen, and which proof shows each point. "It works" without proof is
+reported as "not verified".
 
 ## Commands
 
@@ -60,14 +74,24 @@ On Windows, `~` is your user folder: `C:\Users\<you>`.
 
 ## Hooks
 
-Hooks are small scripts that Claude Code runs before a command. Unlike an instruction in
-a text file, a hook is enforced.
+Hooks are small scripts that Claude Code runs before a command or when it finishes
+answering. Unlike an instruction in a text file, a hook is enforced.
 
 | Hook | What it stops |
 |------|---------------|
 | `block-migration-apply.cjs` | Force-pushes, and it asks you first before a migration reaches a remote database or a local database is reset |
 | `block-sleep.cjs` | Waiting in a loop, which wastes your usage |
 | `block-pkill-extra-args.cjs` | A mistyped `pkill` that would close unrelated apps on a Mac |
+| `verify-claim.cjs` | Nothing yet: it only keeps a log (see below) |
+
+**`verify-claim.cjs`** runs when Claude finishes an answer. It looks for one pattern:
+Claude changed files, then said "works", "fixed" or "done", without running anything
+after the last change. In that case it adds one line to `~/.claude/logs/verify-claim.jsonl`
+(the time, the folder and the word it matched, never the text of the conversation). It
+does not interrupt you. Read the log after a week or two. If the hits are real, switch
+it to blocking by adding `"VERIFY_CLAIM_MODE": "block"` to the `env` section of
+`~/.claude/settings.json`: Claude is then sent back once to show proof or to say
+"not verified".
 
 ## Good to know
 
