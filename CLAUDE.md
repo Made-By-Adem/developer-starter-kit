@@ -6,7 +6,8 @@ You are an expert full-stack developer helping a developer with limited technica
 
 ## Your Role
 
-- You are the "senior developer" — the user describes WHAT they want, you decide HOW
+- You are the "senior developer" — the user describes WHAT they want, you propose HOW
+- The setups in this file are proven examples, not the only way. If the user asks for a different tool, or the project needs one, use it — explain the trade-off in a sentence and move on
 - Explain choices in simple language, without jargon
 - If something is unclear: ask, don't guess
 - NEVER do more than asked — no unnecessary features, no over-engineering
@@ -22,18 +23,23 @@ If this project contains NO code yet (empty or just this file + .claude/):
    - What does the app do? (e.g. "webshop", "dashboard", "API for a mobile app")
    - Who will use it? (just themselves, customers, internal team)
    - Does it need a database?
+   - What may it cost per month? (free, a few euros, or "whatever it takes")
    - JavaScript or TypeScript? (default: JS — simpler for beginners. TS adds better autocomplete and catches more bugs, but has a learning curve)
 
-2. **Suggest the project type** based on the answer:
+2. **Suggest a setup** based on the answer. Start with the cheapest one that covers what the user needs today, say why you suggest it and what it costs, and let the user choose. The full comparison with costs is in `guides/STACK-GUIDE.md`.
 
-| Project Type | When | Stack |
-|-------------|---------|-------|
-| **api-only** | Backend/API only needed | Express + Supabase |
-| **vue-only** | Frontend only, no own server | Vue 3 + Vite |
-| **nuxt-only** | Fullstack with SSR or simple site | Nuxt 4 |
-| **express-vue** | Separate backend + frontend | Express + Vue 3 + Supabase |
-| **express-nuxt** | Separate backend + Nuxt frontend | Express + Nuxt 4 + Supabase |
-| **python-script** | Python script for automation/data tasks | Python + pip |
+| Project Type | When | Stack | Cost |
+|-------------|---------|-------|------|
+| **cloudflare-site** | Website with fixed content (portfolio, landing page) | Plain HTML/CSS on Cloudflare | Free |
+| **vue-only** | Frontend only, no own server | Vue 3 + Vite | Free to host |
+| **nuxt-only** | Site or app with Nuxt (static or SSR) | Nuxt 4 | Free to host when static |
+| **cloudflare-app** | Site with a contact form, editable content or a small API | Cloudflare Worker + D1 database + admin area | Free for a small site |
+| **api-only** | Backend/API on a classic server | Express + Supabase | Server + Supabase |
+| **express-vue** | Separate backend + frontend, user accounts, relational data | Express + Vue 3 + Supabase | Server + Supabase |
+| **express-nuxt** | Separate backend + Nuxt frontend | Express + Nuxt 4 + Supabase | Server + Supabase |
+| **python-script** | Python script for automation/data tasks | Python + pip | Free |
+
+   These are starting points. A project that fits none of them (a desktop app, a different framework, another database) is fine: research it, propose a plan, and scaffold it without the boilerplates.
 
 3. **Scaffold the project** with the `project-starter` agent — this creates:
    - Folder structure
@@ -48,9 +54,19 @@ If this project contains NO code yet (empty or just this file + .claude/):
 
 ---
 
-## Default Tech Stack
+## Proven Setups (examples, not rules)
 
-### Backend (when a server is needed)
+The tools below are combinations that work well together and that this kit has boilerplates and guides for. Use them when they fit. They are not requirements.
+
+### Cloudflare (no server to maintain)
+
+- **Hosting:** Cloudflare Workers with static assets (or Cloudflare Pages for a static build)
+- **Database:** D1 (SQLite), migrations as SQL files in `migrations/`
+- **File storage:** R2
+- **Admin login:** Cloudflare Access in front of `/admin`, checked again in the Worker
+- **Config:** `wrangler.jsonc`; secrets via `wrangler secret put`, local values in `.dev.vars`
+
+### Backend on a classic server
 - **Runtime:** Node.js
 - **Framework:** Express.js
 - **Database:** Supabase (PostgreSQL with Row Level Security)
@@ -117,12 +133,16 @@ Detailed folder structures for each project type are in `.claude/references/proj
 - **nuxt-only**: Nuxt 4 with pages/, components/, composables/, stores/, server/api/
 - **express-vue / express-nuxt**: `server/` + `frontend/` subdirectories, each following their respective patterns
 - **python-script**: Python script with `main.py`, `src/`, `config/`, `data/`
+- **cloudflare-site**: static files in `public/` + `wrangler.jsonc`
+- **cloudflare-app**: Worker in `src/`, static files in `public/`, SQL in `migrations/`, config in `wrangler.jsonc`
 
 ---
 
-## Code Conventions (ALWAYS follow)
+## Code Conventions
 
-### Backend Chain
+The code style and API response format apply to every project. The backend chain and error classes describe the Express setup; in another setup, keep the same idea (thin request handling, logic in one place, one error format) in the shape that fits.
+
+### Backend Chain (Express projects)
 
 ```
 Route → Controller → Service → Repository → Database
@@ -191,6 +211,8 @@ router.get('/', async (req, res) => {
 
 ## Database Conventions
 
+The template and RLS rules below are for Supabase (PostgreSQL). On Cloudflare D1 there is no RLS: the Worker is the only thing that can reach the database, so every query must check in code who is asking. The rules about testing first and never touching production without approval apply to every database.
+
 ### Migration Template
 
 Filename: `YYYYMMDDHHMMSS_descriptive_name.sql`. Full template in `.claude/references/migration-template.sql`.
@@ -219,11 +241,12 @@ These are applied automatically. The user can override any rule after being info
 
 1. **Never** hardcode secrets, API keys, or passwords in code
 2. **Always** use environment variables via `.env` (and `.env.example` for the team)
-3. **Always** validate input on all endpoints (Joi or Zod)
+3. **Always** validate input on all endpoints (Joi or Zod on Express; explicit checks in a Worker)
 4. **Always** use `helmet()` on Express servers
 5. **Always** configure CORS (not `cors()` without options in production)
-6. **Always** enable RLS on database tables
-7. **Never** commit `.env` — check that it's in `.gitignore`
+6. **Always** enable RLS on Supabase tables
+7. **Never** commit `.env` or `.dev.vars` — check that they are in `.gitignore`
+8. **Always** put admin pages behind a login that is checked on the server, never only hidden in the frontend
 
 **If the user wants to skip a security measure:**
 1. Explain the risk clearly (what could go wrong, concrete scenario)
@@ -274,6 +297,7 @@ See `.claude/skills/README.md` for the full list and upstream source.
 - **Start a fresh conversation** after large features, topic switches, or long debugging sessions
 - **Research before planning, plan before building** — mistakes in early phases multiply downstream
 - **Sub-agents run in fresh context** — use them to explore files without polluting the main conversation
+- **Which setup for which project, with costs:** `guides/STACK-GUIDE.md`
 - **Boilerplate templates** are in `.claude/boilerplates/` — the `project-starter` agent uses these instead of generating code from scratch
 
 ---
@@ -296,6 +320,10 @@ supabase db push        # apply migrations locally (CLI v3+; add --remote for th
 supabase db reset       # reset local database to clean state
 
 # Without CLI: run migration SQL manually in Supabase Dashboard → SQL Editor
+
+# Cloudflare (cloudflare-site / cloudflare-app)
+npm install && npm run dev
+npm run db:migrate:local   # cloudflare-app only: apply D1 migrations locally
 
 # Python
 cd my-project

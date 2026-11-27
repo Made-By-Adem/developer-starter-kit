@@ -1,0 +1,42 @@
+:root {
+  color-scheme: light dark;
+  font-family: system-ui, sans-serif;
+  line-height: 1.6;
+}
+
+main {
+  max-width: 40rem;
+  margin: 4rem auto;
+  padding: 0 1rem;
+}
+
+label {
+  display: block;
+  margin-top: 1rem;
+}
+
+input,
+textarea {
+  width: 100%;
+  padding: 0.5rem;
+  font: inherit;
+  box-sizing: border-box;
+}
+
+button {
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  font: inherit;
+  cursor: pointer;
+}
+
+/* Hidden from people, filled in by spam bots */
+.trap {
+  position: absolute;
+  left: -9999px;
+}
+
+.message {
+  border-top: 1px solid;
+  padding: 1rem 0;
+}

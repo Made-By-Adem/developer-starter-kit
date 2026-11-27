@@ -1,0 +1,6 @@
+# Copy this file to .dev.vars (never commit .dev.vars).
+# It is only read by `npm run dev` on your own computer.
+
+# Lets you open /admin locally without Cloudflare Access.
+# The Worker ignores this setting for any address other than localhost.
+ACCESS_DEV_BYPASS=true

@@ -47,6 +47,8 @@ Reusable code templates in `.claude/boilerplates/` — used by the `project-star
 
 **Frontend:** Vue 3 app entry point, API client (Axios for Vue, `$fetch` for Nuxt), example service, Pinia store template, and `useLoading` composable.
 
+**Cloudflare:** two small working starters that host for free: a static site, and a site with a contact form, editable text, a D1 database and an admin area behind a login.
+
 ### 🎨 UI/UX Pro Max Skill Bundle
 
 Design intelligence built in at `.claude/skills/` — activates automatically whenever you do UI/UX work. Vendored from [nextlevelbuilder/ui-ux-pro-max-skill](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) (MIT).
@@ -87,6 +89,7 @@ The vendored copy in `.claude/skills/` gives you a pinned, offline-ready version
 | Guide                                                  | For when you need to...                                       |
 | ------------------------------------------------------ | ------------------------------------------------------------- |
 | 📖[SETUP-GUIDE.md](guides/SETUP-GUIDE.md)                 | Install tools, create your first project, learn the basics    |
+| 🧭[STACK-GUIDE.md](guides/STACK-GUIDE.md)                 | Which setup fits your project, from free to paid              |
 | 🧪[LOCAL-TESTING-GUIDE.md](guides/LOCAL-TESTING-GUIDE.md) | Run and test your project on your own computer                |
 | 🗄️[SUPABASE-GUIDE.md](guides/SUPABASE-GUIDE.md)         | Set up your database (Supabase)                               |
 | 🐙[GITHUB-GUIDE.md](guides/GITHUB-GUIDE.md)               | Learn Git and GitHub basics — saving, sharing, collaborating |
@@ -189,6 +192,8 @@ The main `ui-ux-pro-max` search script uses only the Python 3 standard library �
 
 | Type             | When                              | Stack                        |
 | ---------------- | --------------------------------- | ---------------------------- |
+| `cloudflare-site`| Website, free hosting             | HTML/CSS on Cloudflare       |
+| `cloudflare-app` | Site with form, CMS or small API  | Cloudflare Worker + D1       |
 | `api-only`       | Backend/API only                  | Express + Supabase           |
 | `vue-only`       | Frontend only                     | Vue 3 + Vite + Tailwind      |
 | `nuxt-only`      | Fullstack with SSR                | Nuxt 4 + Tailwind            |
@@ -196,7 +201,9 @@ The main `ui-ux-pro-max` search script uses only the Python 3 standard library �
 | `express-nuxt`   | Separate backend + Nuxt           | Express + Nuxt 4 + Supabase  |
 | `python-script`  | Python script for automation/data | Python + pip                 |
 
-Node.js types available in **JavaScript** (default) or **TypeScript**.
+Node.js types available in **JavaScript** (default) or **TypeScript** (the Cloudflare starters are JavaScript).
+
+These are proven starting points, not limits: you can ask Claude for any other setup. Not sure which one fits, or what it costs? Read the [Stack Guide](guides/STACK-GUIDE.md).
 
 ---
 

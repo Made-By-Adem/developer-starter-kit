@@ -16,6 +16,8 @@ Not every project type deploys the same way. Find your project type and follow t
 | `express-vue`   | Frontend + API server                | 1, 2, 3, 4, 5, 6, 7           |
 | `express-nuxt`  | Frontend + API server                | 1, 2, 3, 4, 5, 6, 7           |
 | `python-script` | Usually not deployed (see section 8) | 8                              |
+| `cloudflare-site` | Static site on Cloudflare          | The `README.md` in your project (one command: `npm run deploy`) |
+| `cloudflare-app`  | Worker + database + admin area     | The `README.md` in your project |
 
 ---
 

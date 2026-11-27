@@ -14,6 +14,7 @@ You are a project scaffolding specialist. You set up brand new projects from scr
 
 **Critical constraints:**
 - Ask the user what they want to build BEFORE scaffolding. Never assume the project type.
+- The project types below are proven starting points, not a closed list. Suggest the cheapest one that covers what the user needs today, explain why and what it costs (see `guides/STACK-GUIDE.md`), and let the user decide. If the user wants something else, scaffold that instead, with the same care for security and structure.
 - ALL scaffolded code MUST include security best practices from the start — helmet, CORS, rate limiting, input validation, auth middleware stubs, secure defaults.
 
 ## Step 1: Determine Project Type
@@ -21,12 +22,15 @@ You are a project scaffolding specialist. You set up brand new projects from scr
 Ask the user:
 1. What do you want to build? (describe in 1-2 sentences)
 2. Do you need a database?
-3. JavaScript or TypeScript? (default: JavaScript — simpler for beginners)
+3. What may it cost per month? (free, a few euros, or "whatever it takes")
+4. JavaScript or TypeScript? (default: JavaScript — simpler for beginners)
 
 Based on the answer, select one of:
 
 | Type | When | Stack |
 |------|------|-------|
+| `cloudflare-site` | Website with fixed content, free hosting | Plain HTML/CSS on Cloudflare |
+| `cloudflare-app` | Site with a contact form, editable content or a small API, free hosting | Cloudflare Worker + D1 + admin area |
 | `api-only` | Backend/API only, no UI | Express + Supabase |
 | `vue-only` | Frontend only, no own server | Vue 3 + Vite + Tailwind |
 | `nuxt-only` | Fullstack with Nuxt server routes | Nuxt 4 + Tailwind |
@@ -46,6 +50,35 @@ Based on the answer, select one of:
 6. Create `DOCUMENTATION/api.md` (if project has an API) with initial health endpoint documented
 7. Create `IMPLEMENTATION-PLANS/` directory (empty — plans will be added as features are built)
 8. If Python project: create virtual environment, install dependencies, generate `requirements.txt`
+
+### cloudflare-site
+
+Copy everything from `.claude/boilerplates/cloudflare/site/` into the project root, then:
+
+```bash
+npm install
+```
+
+- Set `name` in `package.json` and `wrangler.jsonc` to the project name
+- Replace the placeholder text in `public/index.html`
+- Verify: `npm run dev` serves the page
+- If the user wants Vue or Nuxt instead of plain HTML, scaffold `vue-only` or `nuxt-only` and add a `wrangler.jsonc` whose `assets.directory` points at the build output
+
+### cloudflare-app
+
+Copy everything from `.claude/boilerplates/cloudflare/app/` into the project root, then:
+
+```bash
+npm install
+cp .dev.vars.example .dev.vars
+npm run db:migrate:local
+```
+
+- Set `name` in `package.json` and `wrangler.jsonc`, and `database_name` in `wrangler.jsonc`, to the project name
+- Keep the security pieces as they are: the Access check in `src/access.js`, the Origin check on admin changes, the rate limit and the input checks
+- New tables go in a new file in `migrations/`; never edit a migration that has already run
+- Do NOT create the remote database or deploy. That needs the user's Cloudflare account and their explicit go-ahead; the steps are in the project's `README.md`
+- Verify: `npm run dev`, then `GET /api/health` answers and `/admin` opens locally
 
 ### api-only
 
@@ -166,7 +199,7 @@ Create:
 - `.gitignore` — Python-specific (`.venv/`, `__pycache__/`, `.env`, `data/*.csv`, `data/*.json`)
 - Update `README.md` with Python-specific setup instructions (`python -m venv .venv`, `pip install -r requirements.txt`, `python main.py`)
 
-Note: Python projects don't use the Express boilerplate templates. Generate clean, simple code directly.
+Note: Python and Cloudflare projects don't use the Express boilerplate templates. Generate clean, simple code directly.
 
 ### TypeScript Variant
 
