@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>My app</title>
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <main>
+      <h1 id="title">Loading…</h1>
+      <p id="body"></p>
+
+      <h2>Contact</h2>
+      <form id="contact">
+        <label>Name <input name="name" required maxlength="100" /></label>
+        <label>Email <input name="email" type="email" required maxlength="200" /></label>
+        <label>Message <textarea name="message" rows="5" required maxlength="5000"></textarea></label>
+        <label class="trap" aria-hidden="true">Website <input name="website" tabindex="-1" autocomplete="off" /></label>
+        <button type="submit">Send</button>
+        <p id="status" role="status"></p>
+      </form>
+    </main>
+
+    <script type="module">
+      // textContent (not innerHTML) shows text as plain text, so stored content can never run as code.
+      const show = (id, value) => (document.getElementById(id).textContent = value);
+
+      const loadPage = async () => {
+        try {
+          const response = await fetch('/api/pages/home');
+          const result = await response.json();
+          if (!result.success) throw new Error(result.error);
+          show('title', result.data.title);
+          show('body', result.data.body);
+        } catch {
+          show('title', 'This page could not be loaded');
+        }
+      };
+
+      document.getElementById('contact').addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const form = event.target;
+        show('status', 'Sending…');
+        try {
+          const response = await fetch('/api/contact', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(Object.fromEntries(new FormData(form))),
+          });
+          const result = await response.json();
+          show('status', result.success ? 'Thank you, your message was sent.' : result.error);
+          if (result.success) form.reset();
+        } catch {
+          show('status', 'Sending failed. Check your connection and try again.');
+        }
+      });
+
+      loadPage();
+    </script>
+  </body>
+</html>

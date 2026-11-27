@@ -184,6 +184,48 @@ project/
         └── YYYYMMDDHHMMSS_name.sql
 ```
 
+## cloudflare-site
+
+```text
+project/
+├── package.json
+├── wrangler.jsonc           ← Cloudflare config: serves ./public
+├── .gitignore
+├── README.md
+├── DOCUMENTATION/
+│   └── project.md
+├── IMPLEMENTATION-PLANS/
+└── public/
+    ├── index.html
+    ├── 404.html
+    └── style.css
+```
+
+## cloudflare-app
+
+```text
+project/
+├── package.json
+├── wrangler.jsonc           ← Cloudflare config: Worker, static files, D1, rate limit
+├── .dev.vars.example        ← Local-only settings (copy to .dev.vars, never commit)
+├── .gitignore
+├── README.md
+├── DOCUMENTATION/
+│   ├── project.md
+│   └── api.md
+├── IMPLEMENTATION-PLANS/
+├── src/
+│   ├── index.js             ← Routes: public API, admin API, static files
+│   └── access.js            ← Cloudflare Access check for /admin
+├── migrations/
+│   └── 0001_init.sql        ← D1 (SQLite) migrations, numbered
+└── public/
+    ├── index.html
+    ├── style.css
+    └── admin/
+        └── index.html
+```
+
 ## python-script
 
 ```text

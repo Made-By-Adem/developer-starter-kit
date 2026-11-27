@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>Admin</title>
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <main>
+      <h1>Admin</h1>
+
+      <h2>Home page</h2>
+      <form id="page">
+        <label>Title <input name="title" required maxlength="200" /></label>
+        <label>Text <textarea name="body" rows="6" required maxlength="20000"></textarea></label>
+        <button type="submit">Save</button>
+        <p id="status" role="status"></p>
+      </form>
+
+      <h2>Messages</h2>
+      <div id="messages">Loading…</div>
+    </main>
+
+    <script type="module">
+      const show = (id, value) => (document.getElementById(id).textContent = value);
+
+      const call = async (url, options) => {
+        const response = await fetch(url, options);
+        const result = await response.json();
+        if (!result.success) throw new Error(result.error);
+        return result.data;
+      };
+
+      const element = (tag, value) => {
+        const node = document.createElement(tag);
+        node.textContent = value;
+        return node;
+      };
+
+      const loadPage = async () => {
+        const form = document.getElementById('page');
+        try {
+          const page = await call('/api/pages/home');
+          form.title.value = page.title;
+          form.body.value = page.body;
+        } catch (error) {
+          show('status', error.message);
+        }
+      };
+
+      const loadMessages = async () => {
+        const list = document.getElementById('messages');
+        try {
+          const messages = await call('/admin/api/messages');
+          list.replaceChildren();
+          if (messages.length === 0) list.append(element('p', 'No messages yet.'));
+
+          for (const message of messages) {
+            const remove = element('button', 'Delete');
+            remove.addEventListener('click', async () => {
+              await call(`/admin/api/messages/${message.id}`, { method: 'DELETE' });
+              loadMessages();
+            });
+
+            const item = document.createElement('div');
+            item.className = 'message';
+            item.append(
+              element('strong', `${message.name} <${message.email}>`),
+              element('p', message.message),
+              element('small', message.created_at),
+              document.createElement('br'),
+              remove,
+            );
+            list.append(item);
+          }
+        } catch (error) {
+          list.textContent = error.message;
+        }
+      };
+
+      document.getElementById('page').addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const form = event.target;
+        try {
+          await call('/admin/api/pages/home', {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ title: form.title.value, body: form.body.value }),
+          });
+          show('status', 'Saved.');
+        } catch (error) {
+          show('status', error.message);
+        }
+      });
+
+      loadPage();
+      loadMessages();
+    </script>
+  </body>
+</html>
