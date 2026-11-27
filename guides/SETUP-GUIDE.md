@@ -95,10 +95,17 @@ developer-starter-kit/
 │   ├── debugger             ← Finds and fixes bugs
 │   ├── code-reviewer        ← Checks code quality
 │   ├── refactorer           ← Cleans up and improves code structure
-│   ├── performance-checker  ← Finds bottlenecks
+│   ├── perf-audit           ← Finds slow queries and slow pages
 │   ├── migration-risk       ← Assesses database changes
 │   ├── test-impact          ← Tells you what to test
-│   └── docs-impact          ← Flags what needs to be documented
+│   ├── test-writer          ← Writes and runs tests
+│   ├── docs-impact          ← Flags what needs to be documented
+│   ├── doc-writer           ← Writes those documentation updates
+│   ├── security-auditor     ← Checks the whole project for security gaps
+│   ├── release-risk         ← Assesses the risk of a deployment
+│   ├── log-analyser         ← Finds errors in logs you downloaded
+│   └── usage-analyser       ← Shows how people use your app
+├── claude-setup/            ← Complete Claude Code setup for your computer (skills, commands, hooks, status line)
 ├── .env.example             ← Template for environment variables
 ├── README.md                ← Project overview and quick start
 └── guides/                    ← All guides for beginners

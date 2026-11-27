@@ -1,0 +1,51 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git fetch origin *)",
+      "Bash(npm run lint)",
+      "mcp__claude_ai_Supabase__list_projects",
+      "mcp__claude_ai_Supabase__list_migrations",
+      "mcp__claude_ai_Supabase__search_docs",
+      "mcp__claude_ai_Supabase__list_tables"
+    ],
+    "deny": [
+      "mcp__claude_ai_Supabase__apply_migration",
+      "mcp__claude_ai_Supabase__merge_branch",
+      "mcp__claude_ai_Supabase__deploy_edge_function"
+    ],
+    "ask": [
+      "Bash(supabase db push*)",
+      "Bash(npx supabase db push*)",
+      "Bash(supabase db reset*)",
+      "Bash(npx supabase db reset*)"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"$HOME/.claude/hooks/block-migration-apply.cjs\"",
+            "timeout": 10
+          },
+          {
+            "type": "command",
+            "command": "node \"$HOME/.claude/hooks/block-sleep.cjs\"",
+            "timeout": 10
+          },
+          {
+            "type": "command",
+            "command": "node \"$HOME/.claude/hooks/block-pkill-extra-args.cjs\"",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "bash \"$HOME/.claude/statusline.sh\""
+  }
+}

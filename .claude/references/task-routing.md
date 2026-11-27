@@ -37,7 +37,10 @@ Database change:
   → planner → migration-risk → user approval → implementer → done
 
 Performance issue:
-  → performance-checker → plan fixes → implementer → done
+  → perf-audit → plan fixes → implementer → done
+
+Before going live:
+  → security-auditor → release-risk → fix findings → deploy (user approves)
 ```
 
 **Why this order matters (error cascade principle):** Mistakes in early phases multiply exponentially. A bad line of research leads to a bad plan, which leads to hundreds of bad lines of code. That's why research and planning come first, and human review is most valuable on research and plans — not just on code.
@@ -55,10 +58,16 @@ Performance issue:
 | `debugger` | Finds root causes and fixes bugs | When errors occur |
 | `code-reviewer` | Checks quality, security, conventions | After writing code, before commits |
 | `refactorer` | Improves code structure without changing behavior | When code needs cleanup |
-| `performance-checker` | Finds bottlenecks and suggests optimizations | When the app feels slow |
+| `perf-audit` | Finds slow queries, missing indexes and slow frontend code | When the app feels slow, or before a release |
 | `test-impact` | Lists what needs testing after changes | After implementing features |
 | `migration-risk` | Assesses database migration safety | Before applying schema changes |
 | `docs-impact` | Flags documentation that needs updating | After code changes |
+| `doc-writer` | Writes the documentation updates that `docs-impact` flagged | After `docs-impact` |
+| `test-writer` | Writes and runs tests | After `test-impact`, or when the user asks for tests |
+| `security-auditor` | Security check of the whole codebase | Before a release, or periodically |
+| `release-risk` | Assesses deployment risk and rollback | Before deploying to production |
+| `log-analyser` | Finds errors and performance problems in downloaded logs | When logs are in `LOGFILES/` |
+| `usage-analyser` | Shows user behaviour and unused features from logs | When logs are in `LOGFILES/` |
 
 ## When in Doubt
 
