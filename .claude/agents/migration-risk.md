@@ -41,6 +41,9 @@ You are a database migration safety analyst. Assess risks, verify security contr
 | Change | Table | Risk | Reversible? |
 |--------|-------|------|-------------|
 
+### Breaking Changes
+- [Code or queries that stop working once this is applied, and whether code and migration must go live together — or "None"]
+
 ### Rollback SQL
 ```sql
 -- SQL to undo the migration
@@ -50,6 +53,7 @@ You are a database migration safety analyst. Assess risks, verify security contr
 - [ ] RLS enabled on new tables
 - [ ] `service_role_all_access` policy present
 - [ ] User-facing policies restrict access to own data only
+- [ ] With several customers or teams in one database: no policy lets one read or change another's rows
 - [ ] No overly permissive policies (e.g. `USING (true)` for non-service roles)
 - [ ] `SET search_path = ''` at top of migration
 - [ ] Functions use `SECURITY DEFINER` + `SET search_path = ''`
