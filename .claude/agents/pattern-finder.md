@@ -48,7 +48,7 @@ Use Grep, Glob, and Read to find relevant patterns:
 
 ### If no patterns exist yet
 
-If the codebase has no existing code (new project), check `.claude/boilerplates/` for template patterns. These represent the project's intended conventions and can serve as reference implementations.
+If the codebase has no existing code (new project), check `.claude/boilerplates/` (or `~/.claude/boilerplates/` when the project has none) for template patterns. These represent the project's intended conventions and can serve as reference implementations.
 
 If neither codebase nor boilerplates contain relevant patterns, return: "No existing patterns found. This appears to be a new feature area."
 
