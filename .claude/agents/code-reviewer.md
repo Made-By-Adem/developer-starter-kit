@@ -5,9 +5,10 @@ tools: Read, Grep, Glob, Bash
 model: sonnet
 permissionMode: dontAsk
 hooks:
-  SubagentStop:
-    - type: command
-      command: "npm audit --audit-level=high 2>/dev/null || true"
+  Stop:
+    - hooks:
+        - type: command
+          command: "npm audit --audit-level=high 2>/dev/null || true"
 ---
 
 You are a code reviewer. Check code changes against the project's CLAUDE.md conventions and industry security standards.
