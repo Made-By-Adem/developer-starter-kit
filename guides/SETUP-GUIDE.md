@@ -106,10 +106,12 @@ developer-starter-kit/
 │   ├── log-analyser         ← Finds errors in logs you downloaded
 │   └── usage-analyser       ← Shows how people use your app
 ├── claude-setup/            ← Complete Claude Code setup for your computer (skills, commands, hooks, status line)
+├── SETUP-FOR-AI.md          ← Steps Claude follows when you say "set up my dev environment"
 ├── .env.example             ← Template for environment variables
 ├── README.md                ← Project overview and quick start
 └── guides/                    ← All guides for beginners
     ├── SETUP-GUIDE.md         ← This file
+    ├── STACK-GUIDE.md         ← Which setup fits your project, and what it costs
     ├── LOCAL-TESTING-GUIDE.md ← How to test locally
     ├── SUPABASE-GUIDE.md      ← How to set up and use Supabase
     ├── GITHUB-GUIDE.md        ← Git and GitHub basics
@@ -395,6 +397,17 @@ Each project gets its own structure based on what you're building.
 
 Tired of copying the `.claude/agents/` folder into every new project? You can install agents **globally** so they're available everywhere automatically.
 
+### The easy way
+
+Open Claude Code in the `developer-starter-kit` folder and say **"set up my dev environment"**. Claude installs the agents, skills, commands, safety hooks and status line for you, and never overwrites files you already have. You can also run the installer yourself:
+
+```bash
+node claude-setup/install.mjs --dry-run   # shows what would happen
+node claude-setup/install.mjs             # installs
+```
+
+The rest of this section explains how it works and how to do it by hand.
+
 ### How it works
 
 Claude Code looks for agents in **two** places:
@@ -485,7 +498,9 @@ The project CLAUDE.md is **always required** — it tells Claude what the projec
 
 ### Setting it up
 
-Create a file at `~/.claude/CLAUDE.md` with your personal preferences:
+The installer above puts a ready-made global `CLAUDE.md` in place (from `claude-setup/CLAUDE.md`) if you do not have one yet. It tells Claude which workflow to use for which task and adds a few safety rules. You can add your own preferences to it.
+
+Or create a file at `~/.claude/CLAUDE.md` yourself with your personal preferences:
 
 ```markdown
 # Personal Preferences
