@@ -1,0 +1,39 @@
+{
+  // One Cloudflare Worker that serves the site (./public), a small API and an admin area.
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "my-app",
+  "main": "src/index.js",
+  "compatibility_date": "2026-11-01",
+
+  // Logs and errors show up in the Cloudflare dashboard.
+  "observability": { "enabled": true },
+
+  "assets": {
+    "directory": "./public",
+    "binding": "ASSETS",
+    // The Worker handles these paths itself; everything else is served straight from ./public.
+    // /admin must go through the Worker so the login check runs before any admin file is served.
+    "run_worker_first": ["/api/*", "/admin", "/admin/*"]
+  },
+
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "my-app-db",
+      // Replace after running: npx wrangler d1 create my-app-db
+      "database_id": "00000000-0000-0000-0000-000000000000",
+      "migrations_dir": "migrations"
+    }
+  ],
+
+  // At most 5 contact form messages per minute per visitor.
+  "ratelimits": [
+    { "name": "CONTACT_LIMITER", "namespace_id": "1001", "simple": { "limit": 5, "period": 60 } }
+  ],
+
+  // Not secret. Fill these in when you set up Cloudflare Access for /admin (see README).
+  "vars": {
+    "ACCESS_TEAM_DOMAIN": "",
+    "ACCESS_AUD": ""
+  }
+}
