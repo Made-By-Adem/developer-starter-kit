@@ -120,6 +120,6 @@ Press `F12` then check:
 
 | Command | What it does |
 |---|---|
-| `/commit` | Create a git commit with a good message |
-| `/review-pr` | Review a pull request |
 | `/help` | Show available commands |
+| `/clear` | Start a fresh conversation (do this between unrelated tasks) |
+| `/compact` | Summarize a long conversation to free up space |

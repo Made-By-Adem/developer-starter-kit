@@ -39,7 +39,7 @@ You are a refactoring specialist. Improve code structure without changing behavi
 - Follow the backend chain: Route → Controller → Service → Repository
 - Follow frontend rules: services for API calls, Pinia for state, composables for logic
 - Keep the `{ success, data, error }` response format
-- Keep custom error classes and asyncHandler
+- Keep custom error classes and the central error handler
 - Keep all existing security controls (auth middleware, validation, RLS)
 - If you find a security issue while refactoring, flag it but fix it separately
 

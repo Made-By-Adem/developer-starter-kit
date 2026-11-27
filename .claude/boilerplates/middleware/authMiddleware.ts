@@ -6,10 +6,10 @@ import { User } from '@supabase/supabase-js';
 // Middleware that protects routes — only logged-in users can access them.
 // Use it on routes that need authentication:
 //
-//   router.get('/profile', requireAuth, asyncHandler(async (req, res) => {
+//   router.get('/profile', requireAuth, async (req, res) => {
 //     // req.user contains the authenticated Supabase user
 //     res.json({ success: true, data: req.user });
-//   }));
+//   });
 //
 // Public routes (like GET /api/products) don't need this middleware.
 

@@ -89,6 +89,8 @@ This is a VS Code extension that lets you make API requests without leaving your
 
 **Best for:** quick one-off requests while you're coding in VS Code.
 
+> 📝 **Note:** The free version of Thunder Client covers this, but it does not work when VS Code runs inside WSL or on a remote server. A fully free alternative is the **REST Client** extension (`humao.rest-client`): you write requests in a `.http` file and click "Send Request".
+
 ### Method 3: Postman (recommended for serious API testing)
 
 Postman is a standalone app with more features than Thunder Client — collections, environments, team sharing, automated testing, and more.
@@ -264,7 +266,7 @@ Ask Claude:
 My server doesn't restart automatically when I change code. Fix this.
 ```
 
-(They'll probably install `nodemon`)
+(They'll probably switch the dev script to `node --watch`, which is built into Node.js)
 
 ### Page is blank
 

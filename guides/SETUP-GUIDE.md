@@ -125,7 +125,7 @@ developer-starter-kit/
 
 ```bash
 node --version
-# Should show something like: v20.11.0
+# Should show something like: v24.11.0 (any version from 22 up is fine)
 ```
 
 ### 2. Install Git
@@ -160,9 +160,19 @@ node --version
 
 If you prefer working in the terminal:
 
+**Mac / Linux:**
+
 ```bash
-npm install -g @anthropic-ai/claude-code
+curl -fsSL https://claude.ai/install.sh | bash
 ```
+
+**Windows (PowerShell):**
+
+```powershell
+irm https://claude.ai/install.ps1 | iex
+```
+
+This installer keeps Claude Code up to date by itself. Installing with npm also still works: `npm install -g @anthropic-ai/claude-code` (needs Node.js 22 or newer, and never use `sudo` with it).
 
 ### 5. Install Supabase CLI (optional)
 
@@ -174,17 +184,25 @@ If your project uses a database, the Supabase CLI lets you test database changes
 brew install supabase/tap/supabase
 ```
 
-**Windows (via npm):**
+**Windows (via [Scoop](https://scoop.sh)):**
+
+```powershell
+scoop bucket add supabase https://github.com/supabase/scoop-bucket.git
+scoop install supabase
+```
+
+**Any system, inside one project (via npm):**
 
 ```bash
-npm install -g supabase
+npm install supabase --save-dev
+# then run it with npx, for example: npx supabase --version
 ```
 
 Check if it works:
 
 ```bash
 supabase --version
-# Should show something like: 1.x.x
+# Should show 3.x.x or higher
 ```
 
 > 📝 **Note:** The Supabase CLI uses Docker to run a local copy of Supabase. Make sure Docker Desktop is installed and running if you want to use `supabase start`.
