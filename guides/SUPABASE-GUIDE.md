@@ -45,7 +45,7 @@ Your app needs a few pieces of information to connect to Supabase. Here's how to
 
 1. Open your project in the Supabase Dashboard
 2. Click **Project Settings** (the gear icon in the sidebar, at the bottom)
-3. Click **API** in the left menu
+3. Click **API Keys** in the left menu
 
 ### Step 2: Copy your keys
 
@@ -54,10 +54,12 @@ You'll see three important values:
 | Key | Where to find it | What is it? |
 |-----|-------------------|-------------|
 | **Project URL** | Under "Project URL" | The web address of your database. Your app uses this to know WHERE to connect. Looks like: `https://abcdefgh.supabase.co` |
-| **anon (public) key** | Under "Project API keys" | A key that is safe to use in your frontend (browser). It can only do what your security rules (RLS policies) allow. Think of it as a "guest pass". |
-| **service_role (secret) key** | Under "Project API keys" (click to reveal) | A key that can do EVERYTHING — bypass all security rules. **Never use this in frontend code.** Only use it on your server (backend). Treat it like a password. |
+| **Publishable key** | Under "Publishable key" — starts with `sb_publishable_` | A key that is safe to use in your frontend (browser). It can only do what your security rules (RLS policies) allow. Think of it as a "guest pass". |
+| **Secret key** | Under "Secret keys" (click to reveal) — starts with `sb_secret_` | A key that can do EVERYTHING — bypass all security rules. **Never use this in frontend code.** Only use it on your server (backend). Treat it like a password. |
 
-> ⚠️ **Important:** The `service_role` key is like a master key. Anyone who has it can read, change, and delete ALL your data. Keep it secret. Never put it in frontend code, never commit it to GitHub.
+> 📝 **Older names:** Supabase used to call these the `anon` key and the `service_role` key (long keys starting with `eyJ`). You will still see those names in older tutorials and projects. Supabase plans to retire the old keys in 2027, so use the publishable and secret keys for anything new. The database roles `anon`, `authenticated` and `service_role` that you see in RLS policies keep their names.
+
+> ⚠️ **Important:** The secret key is like a master key. Anyone who has it can read, change, and delete ALL your data. Keep it secret. Never put it in frontend code, never commit it to GitHub.
 
 ---
 
@@ -186,13 +188,13 @@ It's like the difference between leaving your front door wide open versus having
 
 ### Why is it important?
 
-Without RLS, anyone who knows your `anon` key (which is visible in your frontend code) could:
+Without RLS, anyone who knows your publishable key (which is visible in your frontend code) could:
 
 - Read ALL your data
 - Change other people's data
 - Delete everything
 
-With RLS, even if someone has your `anon` key, they can only do what your policies allow.
+With RLS, even if someone has your publishable key, they can only do what your policies allow.
 
 **Supabase enables RLS by default on new tables.** This is a good thing. Don't turn it off.
 
@@ -219,7 +221,7 @@ A policy is a rule that says "who can do what". Here are the most common ones:
 
 **1. Server (service_role) can do everything**
 
-This is the most important policy. Your backend server uses the `service_role` key, so it needs full access:
+This is the most important policy. Your backend server uses the secret key (database role `service_role`), so it needs full access:
 
 ```sql
 CREATE POLICY "service_role_all_access" ON public.books
@@ -227,7 +229,7 @@ CREATE POLICY "service_role_all_access" ON public.books
     USING (true) WITH CHECK (true);
 ```
 
-> ✅ **Good practice to add this policy.** If your backend uses the `service_role` key (which is the default in this kit), RLS is already bypassed automatically — so this policy isn't strictly required. But it's good practice to include it: it documents the intended access level and protects you if the client setup ever changes.
+> ✅ **Good practice to add this policy.** If your backend uses the secret key (which is the default in this kit), RLS is already bypassed automatically — so this policy isn't strictly required. But it's good practice to include it: it documents the intended access level and protects you if the client setup ever changes.
 
 **2. Users can only see their own data**
 
@@ -287,14 +289,14 @@ You created a table, inserted data, but your app shows nothing. Sound familiar?
 2. Check if there is a policy that allows reading (`SELECT`)
 3. If not, add one. The most common fix:
 
-   **If your app uses the `service_role` key (backend/server):**
+   **If your app uses the secret key (backend/server):**
    ```sql
    CREATE POLICY "service_role_all_access" ON public.books
        FOR ALL TO service_role
        USING (true) WITH CHECK (true);
    ```
 
-   **If your app uses the `anon` key (frontend) and data should be public:**
+   **If your app uses the publishable key (frontend) and data should be public:**
    ```sql
    CREATE POLICY "public_read" ON public.books
        FOR SELECT TO anon
@@ -323,11 +325,11 @@ Open the `.env` file in the root of your project (or in the `server/` folder if 
 
 ```env
 SUPABASE_URL=https://your-project-id.supabase.co
-SUPABASE_ANON_KEY=your-anon-key-here
-SUPABASE_SERVICE_ROLE_KEY=your-service-role-key-here
+SUPABASE_PUBLISHABLE_KEY=sb_publishable_your-key-here
+SUPABASE_SECRET_KEY=sb_secret_your-key-here
 ```
 
-Replace the values with the ones from your Dashboard (Project Settings → Data API).
+Replace the values with the ones from your Dashboard (Project Settings → API Keys).
 
 > ⚠️ **Important:** Never commit your `.env` file to GitHub. Make sure `.env` is listed in your `.gitignore` file. If you see a `.env.example` file, that's the template — it shows which keys are needed but doesn't contain real values.
 
@@ -340,7 +342,7 @@ const { createClient } = require('@supabase/supabase-js');
 
 const supabase = createClient(
   process.env.SUPABASE_URL,
-  process.env.SUPABASE_SERVICE_ROLE_KEY
+  process.env.SUPABASE_SECRET_KEY
 );
 
 module.exports = supabase;
@@ -352,7 +354,7 @@ This file:
 2. Creates a "client" — a connection to your Supabase database
 3. Exports it so other files can use it
 
-> 📝 **Note:** On the backend, we use the `SUPABASE_SERVICE_ROLE_KEY` because the server needs full access. On the frontend, you would use the `SUPABASE_ANON_KEY` instead (so users can only do what your RLS policies allow).
+> 📝 **Note:** On the backend, we use the `SUPABASE_SECRET_KEY` because the server needs full access. On the frontend, you would use the `SUPABASE_PUBLISHABLE_KEY` instead (so users can only do what your RLS policies allow).
 
 ### Step 3: Making your first query
 
@@ -426,8 +428,8 @@ async function deleteBook(bookId) {
 | Problem | Cause | Solution |
 |---------|-------|----------|
 | "My data doesn't show up" (empty array `[]`) | RLS is blocking read access | Add a SELECT policy to your table. See the "I can't see my data!" section above. |
-| "Permission denied for table" | No RLS policy for the role you're using | Add the correct policy. If you're using `service_role`, add the `service_role_all_access` policy. |
-| "Invalid API key" | Your `.env` file doesn't match the Dashboard | Go to Project Settings → Data API in the Dashboard. Copy the keys again. Make sure there are no extra spaces. Restart your server after changing `.env`. |
+| "Permission denied for table" | No RLS policy for the role you're using | Add the correct policy. If your server uses the secret key, add the `service_role_all_access` policy. |
+| "Invalid API key" | Your `.env` file doesn't match the Dashboard | Go to Project Settings → API Keys in the Dashboard. Copy the keys again. Make sure there are no extra spaces. Restart your server after changing `.env`. |
 | "relation does not exist" (table doesn't exist) | The migration hasn't been run yet | Go to SQL Editor in the Dashboard, paste your migration SQL, and run it. Check for typos in the table name. |
 | "column not found" or "Could not find column" | The column name is wrong, or the migration is outdated | Check the exact column name in Table Editor. Check your migration file for typos. Column names are case-sensitive. |
 | "new row violates row-level security policy" | RLS is blocking your insert/update | Add an INSERT or UPDATE policy for the role you're using. |
@@ -457,14 +459,16 @@ After `supabase start`, you'll see local URLs and keys in the terminal. You can 
 ### Testing migrations locally
 
 ```bash
-# Apply all migrations from database/migrations/ to your local database
+# Apply new migrations to your local database
 supabase db push
 
 # Reset local database to a clean state (re-applies all migrations)
 supabase db reset
 ```
 
-This is the safest way to test migrations: try them locally first, fix any issues, then run them on your production Supabase project via the Dashboard SQL Editor.
+> 📝 **CLI version matters:** these commands are for Supabase CLI version 3 and newer, where `supabase db push` works on your **local** database unless you add `--remote`. In older versions (1 and 2) the same command pushed to your **real** project. Check with `supabase --version` and update if you are below 3.
+
+This is the safest way to test migrations: try them locally first, fix any issues, then run them on your production Supabase project via the Dashboard SQL Editor (or with `supabase db push --remote`, which asks you to confirm first).
 
 ### When to use it
 
@@ -482,7 +486,7 @@ This is the safest way to test migrations: try them locally first, fix any issue
 ## 💡 Tips
 
 - **Check the Table Editor first** — when debugging, always look at the actual data in the Dashboard before checking code
-- **Add the `service_role_all_access` policy as a safety net** — the `service_role` key already bypasses RLS, but this policy documents access intent and protects against misconfiguration
+- **Add the `service_role_all_access` policy as a safety net** — the secret key already bypasses RLS, but this policy documents access intent and protects against misconfiguration
 - **Restart your server after changing `.env`** — environment variables are loaded once at startup
 - **Use `.select()` after `.insert()` and `.update()`** — without it, Supabase won't return the created/updated row
 - **Use `.single()` when you expect one row** — it returns an object instead of an array

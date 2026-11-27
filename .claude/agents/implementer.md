@@ -31,7 +31,7 @@ You are an implementation specialist. Execute approved plans step-by-step while 
 
 Read CLAUDE.md, but at minimum:
 
-- `asyncHandler` wrapper on all Express routes
+- `async` Express route handlers; errors go to the central error handler (Express 5 forwards them)
 - Custom error classes from `utils/errors.js`
 - `{ success, data, error }` API response format
 - Joi validation on all inputs

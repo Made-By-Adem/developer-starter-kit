@@ -114,7 +114,7 @@ NUXT_PUBLIC_API_URL=https://your-api-url.com
 ```bash
 # .env (root of your project)
 SUPABASE_URL=https://your-project.supabase.co
-SUPABASE_SERVICE_ROLE_KEY=your-service-role-key-here
+SUPABASE_SECRET_KEY=sb_secret_your-key-here
 PORT=10002
 NODE_ENV=production
 CORS_ORIGIN=https://yourapp.pages.dev
@@ -136,7 +136,7 @@ NUXT_PUBLIC_API_URL=https://api.yourapp.com
 
 ```bash
 SUPABASE_URL=https://your-project.supabase.co
-SUPABASE_SERVICE_ROLE_KEY=your-service-role-key-here
+SUPABASE_SECRET_KEY=sb_secret_your-key-here
 PORT=10002
 NODE_ENV=production
 CORS_ORIGIN=https://your-app-name.pages.dev
@@ -329,7 +329,7 @@ Create `docker-compose.yml` in the root of your project:
 services:
   server:
     container_name: my-app-server
-    image: node:20-slim
+    image: node:24-slim
     restart: always
     working_dir: /app
     ports:
@@ -349,7 +349,7 @@ Create `docker-compose.yml` in the root of your project (not inside `server/`):
 services:
   server:
     container_name: my-app-server
-    image: node:20-slim
+    image: node:24-slim
     restart: always
     working_dir: /app/server
     ports:
@@ -367,7 +367,7 @@ services:
 
 | Line                                    | What it does                                                                       |
 | --------------------------------------- | ---------------------------------------------------------------------------------- |
-| `image: node:20-slim`                   | Use Node.js 20 (slim version, smaller download)                                   |
+| `image: node:24-slim`                   | Use Node.js 24 (slim version, smaller download)                                   |
 | `restart: always`                       | If the server crashes, Docker restarts it automatically                            |
 | `working_dir: /app`                     | Inside the container, work from the `/app` folder                                  |
 | `ports: '127.0.0.1:10002:10002'`        | Make port 10002 available, but **only** on localhost (not publicly visible)         |
@@ -389,7 +389,7 @@ Add your production environment variables:
 
 ```bash
 SUPABASE_URL=https://your-project.supabase.co
-SUPABASE_SERVICE_ROLE_KEY=your-service-role-key-here
+SUPABASE_SECRET_KEY=sb_secret_your-key-here
 PORT=10002
 NODE_ENV=production
 CORS_ORIGIN=https://your-app-name.pages.dev

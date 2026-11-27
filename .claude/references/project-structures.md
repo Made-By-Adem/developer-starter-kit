@@ -28,8 +28,7 @@ project/
 │   ├── validationMiddleware.js
 │   └── errorHandler.js
 ├── utils/
-│   ├── errors.js
-│   └── asyncHandler.js
+│   └── errors.js
 ├── config/
 │   ├── supabase.js
 │   └── logger.js
@@ -45,8 +44,6 @@ project/
 ├── index.html
 ├── package.json
 ├── vite.config.js
-├── tailwind.config.js
-├── postcss.config.js
 ├── .env.example
 ├── .gitignore
 ├── README.md
@@ -78,30 +75,32 @@ project/
 project/
 ├── nuxt.config.ts
 ├── package.json
-├── app.vue
 ├── .env.example
 ├── .gitignore
 ├── README.md
 ├── DOCUMENTATION/
 │   └── project.md
 ├── IMPLEMENTATION-PLANS/
-├── pages/
-│   └── index.vue
-├── components/
-│   └── [Component].vue
-├── composables/
-│   └── use[Feature].ts
-├── stores/
-│   └── [domain].ts
-├── services/
-│   └── apiClient.js         ← Uses $fetch + useRuntimeConfig() (not Axios)
+├── app/                     ← Nuxt 4 keeps app code in app/
+│   ├── app.vue
+│   ├── pages/
+│   │   └── index.vue
+│   ├── components/
+│   │   └── [Component].vue
+│   ├── composables/
+│   │   └── use[Feature].ts
+│   ├── stores/
+│   │   └── [domain].ts
+│   ├── services/
+│   │   └── apiClient.js     ← Uses $fetch + useRuntimeConfig() (not Axios)
+│   └── assets/
+│       └── css/
+│           └── main.css
 ├── server/
 │   ├── api/
 │   │   └── [endpoint].ts
 │   └── middleware/
-├── assets/
-│   └── css/
-│       └── main.css
+├── public/
 └── database/
     └── migrations/
         └── YYYYMMDDHHMMSS_name.sql
@@ -173,12 +172,13 @@ project/
 │   ├── package.json
 │   ├── nuxt.config.ts
 │   ├── .env.example         ← Contains NUXT_PUBLIC_API_URL
-│   ├── pages/
-│   ├── components/
-│   ├── composables/
-│   ├── stores/
-│   └── services/
-│       └── apiClient.js      ← Uses $fetch + useRuntimeConfig() (not Axios)
+│   └── app/                 ← Nuxt 4 keeps app code in app/
+│       ├── pages/
+│       ├── components/
+│       ├── composables/
+│       ├── stores/
+│       └── services/
+│           └── apiClient.js  ← Uses $fetch + useRuntimeConfig() (not Axios)
 └── database/
     └── migrations/
         └── YYYYMMDDHHMMSS_name.sql

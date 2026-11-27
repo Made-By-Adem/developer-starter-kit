@@ -30,9 +30,9 @@ If this project contains NO code yet (empty or just this file + .claude/):
 |-------------|---------|-------|
 | **api-only** | Backend/API only needed | Express + Supabase |
 | **vue-only** | Frontend only, no own server | Vue 3 + Vite |
-| **nuxt-only** | Fullstack with SSR or simple site | Nuxt 3 |
+| **nuxt-only** | Fullstack with SSR or simple site | Nuxt 4 |
 | **express-vue** | Separate backend + frontend | Express + Vue 3 + Supabase |
-| **express-nuxt** | Separate backend + Nuxt frontend | Express + Nuxt 3 + Supabase |
+| **express-nuxt** | Separate backend + Nuxt frontend | Express + Nuxt 4 + Supabase |
 | **python-script** | Python script for automation/data tasks | Python + pip |
 
 3. **Scaffold the project** with the `project-starter` agent — this creates:
@@ -59,7 +59,7 @@ If this project contains NO code yet (empty or just this file + .claude/):
 - **Security:** Helmet, CORS, rate limiting
 
 ### Frontend
-- **Framework:** Vue 3 (Composition API) or Nuxt 3
+- **Framework:** Vue 3 (Composition API) or Nuxt 4
 - **State:** Pinia
 - **Styling:** Tailwind CSS
 - **HTTP client:** Axios (or $fetch in Nuxt)
@@ -114,7 +114,7 @@ Detailed folder structures for each project type are in `.claude/references/proj
 
 - **api-only**: Express server with routes/, controllers/, services/, repositories/, middleware/, utils/, config/
 - **vue-only**: Vue 3 + Vite with src/views/, src/components/, src/stores/, src/services/, src/composables/
-- **nuxt-only**: Nuxt 3 with pages/, components/, composables/, stores/, server/api/
+- **nuxt-only**: Nuxt 4 with pages/, components/, composables/, stores/, server/api/
 - **express-vue / express-nuxt**: `server/` + `frontend/` subdirectories, each following their respective patterns
 - **python-script**: Python script with `main.py`, `src/`, `config/`, `data/`
 
@@ -159,16 +159,16 @@ throw new Error('Product not found');
 res.status(404).json({ error: '...' });  // not in the service layer
 ```
 
-All route handlers MUST use the `asyncHandler` wrapper:
+Route handlers are plain `async` functions. Express 5 passes a thrown error or rejected promise to the error handler by itself, so no wrapper is needed:
 
 ```javascript
-const asyncHandler = require('../utils/asyncHandler');
-
-router.get('/', asyncHandler(async (req, res) => {
+router.get('/', async (req, res) => {
   const data = await someService.getAll();
   res.json({ success: true, data });
-}));
+});
 ```
+
+(On an older Express 4 project, async errors are NOT caught automatically — upgrade to Express 5 or wrap the handlers.)
 
 ### Frontend Rules
 
@@ -248,9 +248,9 @@ Detailed agent workflows, decision trees, and the full agent reference table are
 
 | Command | What it does |
 |---------|-------------|
-| `/commit` | Create a git commit with a good message |
-| `/review-pr` | Review a pull request |
 | `/help` | Show available commands |
+| `/clear` | Start a fresh conversation (do this between unrelated tasks) |
+| `/compact` | Summarize a long conversation to free up space |
 
 ---
 
@@ -292,7 +292,7 @@ cd frontend && npm install && npm run dev
 
 # Test database migrations (requires Supabase CLI)
 supabase start          # start local Supabase (first time only)
-supabase db push        # apply migrations locally
+supabase db push        # apply migrations locally (CLI v3+; add --remote for the real project)
 supabase db reset       # reset local database to clean state
 
 # Without CLI: run migration SQL manually in Supabase Dashboard → SQL Editor
