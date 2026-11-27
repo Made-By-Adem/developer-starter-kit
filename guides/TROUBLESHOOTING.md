@@ -93,7 +93,7 @@ Also check that your frontend is pointing to the correct backend URL:
 **Fix:**
 1. Go to Supabase Dashboard → Authentication → Policies
 2. Check if your table has policies that allow reading
-3. If you're using the `service_role` key in the backend, it bypasses RLS — make sure your `.env` has `SUPABASE_SERVICE_ROLE_KEY` set
+3. If you're using the secret key in the backend, it bypasses RLS — make sure your `.env` has `SUPABASE_SECRET_KEY` set
 4. If you need public read access, add a policy:
 ```sql
 CREATE POLICY "Allow public read" ON public.your_table
@@ -112,7 +112,7 @@ See `guides/SUPABASE-GUIDE.md` for more on RLS.
 - Check if the endpoint requires authentication (uses `requireAuth` middleware)
 - Make sure you're sending the token in the `Authorization` header: `Bearer your-token-here`
 - Check if the token is expired — log in again to get a fresh one
-- Make sure `SUPABASE_URL` and `SUPABASE_ANON_KEY` are correct in your `.env`
+- Make sure `SUPABASE_URL` and `SUPABASE_PUBLISHABLE_KEY` are correct in your `.env`
 
 ---
 
@@ -173,7 +173,7 @@ Then check that `.env` is listed in your `.gitignore` file. If your secrets were
 1. Check your terminal where the server is running — the full error is usually logged there
 2. If you see a database error, check:
    - Is Supabase running and reachable?
-   - Are your `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` correct?
+   - Are your `SUPABASE_URL` and `SUPABASE_SECRET_KEY` correct?
    - Does the table exist? (Check Supabase Dashboard → Table Editor)
 3. If you see a code error, look at the file and line number in the stack trace
 4. Ask Claude: paste the full error message and which endpoint you called

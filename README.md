@@ -6,7 +6,7 @@ A complete toolkit for junior developers who want to build professional web apps
 
 You describe what you want in plain English. Claude Code builds it for you â€” with professional structure, security, and best practices baked in.
 
-[![Node.js](https://img.shields.io/badge/Node.js-LTS-339933?logo=node.js&logoColor=white)](https://nodejs.org) [![Python](https://img.shields.io/badge/Python-3-3776AB?logo=python&logoColor=white)](https://python.org) [![Vue 3](https://img.shields.io/badge/Vue-3-4FC08D?logo=vue.js&logoColor=white)](https://vuejs.org) [![Nuxt 3](https://img.shields.io/badge/Nuxt-3-00DC82?logo=nuxt.js&logoColor=white)](https://nuxt.com) [![Supabase](https://img.shields.io/badge/Supabase-Database-3ECF8E?logo=supabase&logoColor=white)](https://supabase.com) [![Claude Code](https://img.shields.io/badge/Claude_Code-AI-D97757?logo=anthropic&logoColor=white)](https://claude.ai/claude-code)
+[![Node.js](https://img.shields.io/badge/Node.js-LTS-339933?logo=node.js&logoColor=white)](https://nodejs.org) [![Python](https://img.shields.io/badge/Python-3-3776AB?logo=python&logoColor=white)](https://python.org) [![Vue 3](https://img.shields.io/badge/Vue-3-4FC08D?logo=vue.js&logoColor=white)](https://vuejs.org) [![Nuxt 4](https://img.shields.io/badge/Nuxt-4-00DC82?logo=nuxt.js&logoColor=white)](https://nuxt.com) [![Supabase](https://img.shields.io/badge/Supabase-Database-3ECF8E?logo=supabase&logoColor=white)](https://supabase.com) [![Claude Code](https://img.shields.io/badge/Claude_Code-AI-D97757?logo=anthropic&logoColor=white)](https://claude.ai/claude-code)
 
 ---
 
@@ -191,9 +191,9 @@ The main `ui-ux-pro-max` search script uses only the Python 3 standard library â
 | ---------------- | --------------------------------- | ---------------------------- |
 | `api-only`       | Backend/API only                  | Express + Supabase           |
 | `vue-only`       | Frontend only                     | Vue 3 + Vite + Tailwind      |
-| `nuxt-only`      | Fullstack with SSR                | Nuxt 3 + Tailwind            |
+| `nuxt-only`      | Fullstack with SSR                | Nuxt 4 + Tailwind            |
 | `express-vue`    | Separate backend + frontend       | Express + Vue 3 + Supabase   |
-| `express-nuxt`   | Separate backend + Nuxt           | Express + Nuxt 3 + Supabase  |
+| `express-nuxt`   | Separate backend + Nuxt           | Express + Nuxt 4 + Supabase  |
 | `python-script`  | Python script for automation/data | Python + pip                 |
 
 Node.js types available in **JavaScript** (default) or **TypeScript**.

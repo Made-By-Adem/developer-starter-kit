@@ -29,9 +29,9 @@ Based on the answer, select one of:
 |------|------|-------|
 | `api-only` | Backend/API only, no UI | Express + Supabase |
 | `vue-only` | Frontend only, no own server | Vue 3 + Vite + Tailwind |
-| `nuxt-only` | Fullstack with Nuxt server routes | Nuxt 3 + Tailwind |
+| `nuxt-only` | Fullstack with Nuxt server routes | Nuxt 4 + Tailwind |
 | `express-vue` | Separate backend + frontend | Express + Vue 3 + Supabase |
-| `express-nuxt` | Separate backend + Nuxt frontend | Express + Nuxt 3 + Supabase |
+| `express-nuxt` | Separate backend + Nuxt frontend | Express + Nuxt 4 + Supabase |
 | `python-script` | Python script for automation/data tasks | Python + pip |
 
 ## Step 2: Scaffold Based on Type
@@ -52,7 +52,7 @@ Based on the answer, select one of:
 ```bash
 npm init -y
 npm install express cors dotenv helmet joi express-rate-limit @supabase/supabase-js winston
-npm install --save-dev nodemon prettier eslint eslint-config-prettier eslint-plugin-prettier
+npm install --save-dev prettier eslint eslint-config-prettier
 ```
 
 Create:
@@ -65,23 +65,22 @@ Create:
 - `middleware/authMiddleware.js` — placeholder auth middleware
 - `middleware/validationMiddleware.js` — Joi validation helper
 - `utils/errors.js` — custom error classes (ValidationError, NotFoundError, etc.)
-- `utils/asyncHandler.js` — async route handler wrapper
 - `config/supabase.js` — Supabase client setup
 - `config/logger.js` — Winston logger setup
 - `logs/` — empty folder (gitignored)
 - `database/migrations/` — empty folder for SQL migrations
-- `.env.example` — PORT, CORS_ORIGIN, SUPABASE_URL, SUPABASE_ANON_KEY, SUPABASE_SERVICE_ROLE_KEY, APP_NAME, LOG_LEVEL
+- `.env.example` — PORT, CORS_ORIGIN, SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, SUPABASE_SECRET_KEY, APP_NAME, LOG_LEVEL
 - `.prettierrc.js` — standard config
-- `.eslintrc.js` — standard config
-- Update `package.json` scripts: `"dev": "nodemon server.js"`, `"start": "node server.js"`
+- `eslint.config.js` — standard flat config
+- Update `package.json` scripts: `"dev": "node --watch server.js"`, `"start": "node server.js"`
 
 ### vue-only
 
 ```bash
 npm create vite@latest . -- --template vue
 npm install pinia vue-router axios
-npm install -D tailwindcss postcss autoprefixer prettier
-npx tailwindcss init -p
+npm install tailwindcss @tailwindcss/vite
+npm install -D prettier
 ```
 
 Create:
@@ -92,29 +91,31 @@ Create:
 - `src/views/HomeView.vue` — starter home page
 - `src/components/` — empty folder
 - `src/composables/` — empty folder
-- `src/assets/main.css` — Tailwind imports
-- Configure `tailwind.config.js` content paths
-- Configure `vite.config.js` with alias `@` → `src/`
+- `src/assets/main.css` — contains `@import "tailwindcss";` (Tailwind v4 needs no `tailwind.config.js` or PostCSS setup)
+- Configure `vite.config.js` with the `tailwindcss()` plugin from `@tailwindcss/vite` and alias `@` → `src/`
 - `.env.example` — VITE_API_URL
 - Wire up Pinia and Router in `main.js`
 
 ### nuxt-only
 
 ```bash
-npx nuxi@latest init . --no-git
-npm install @pinia/nuxt
-npm install -D @nuxtjs/tailwindcss prettier
+npm create nuxt@latest .
+npx nuxi@latest module add pinia
+npm install tailwindcss @tailwindcss/vite
+npm install -D prettier
 ```
 
+Nuxt 4 keeps the app code in an `app/` folder; `server/` and `public/` stay at the project root.
+
 Create:
-- `pages/index.vue` — starter home page
-- `components/` — empty folder
-- `composables/` — empty folder
-- `stores/` — example Pinia store
-- `services/apiClient.js` — API client using `$fetch` and `useRuntimeConfig()` (NOT Axios)
+- `app/pages/index.vue` — starter home page
+- `app/components/` — empty folder
+- `app/composables/` — empty folder
+- `app/stores/` — example Pinia store
+- `app/services/apiClient.js` — API client using `$fetch` and `useRuntimeConfig()` (NOT Axios)
 - `server/api/health.get.js` — health check endpoint
-- `assets/css/main.css` — Tailwind imports
-- Configure `nuxt.config.ts` with `@pinia/nuxt` and `@nuxtjs/tailwindcss` modules and runtime config
+- `app/assets/css/main.css` — contains `@import "tailwindcss";`
+- Configure `nuxt.config.ts` with the `@pinia/nuxt` module, `css: ['~/assets/css/main.css']`, `vite: { plugins: [tailwindcss()] }` (import from `@tailwindcss/vite`) and runtime config
 - `.env.example` — NUXT_PUBLIC_API_URL, SUPABASE_URL, SUPABASE_KEY
 - If database needed: `database/migrations/` folder
 
@@ -174,7 +175,7 @@ If the user chose TypeScript, apply these changes to any project type above:
 **Backend (Express):**
 - Use `.ts` files instead of `.js` (e.g. `server.ts`, `routes/userRoutes.ts`)
 - Add `tsconfig.json` with strict mode and `"outDir": "dist"` so `tsc` builds to `dist/`
-- Replace `nodemon` with `tsx` for dev: `"dev": "tsx watch server.ts"`
+- Use `tsx` for dev instead of `node --watch`: `"dev": "tsx watch server.ts"`
 - Add dependencies: `typescript`, `tsx`, `@types/node`, `@types/express`, `@types/cors`
 - Use ES module imports: `import express from 'express'` instead of `require()`
 - Create `types/` folder with interfaces for API responses, request bodies, and database models
@@ -202,7 +203,7 @@ export interface PaginatedResponse<T> extends ApiResponse<T[]> {
 - Define prop types with `defineProps<{ title: string }>()`
 
 **Frontend (Nuxt):**
-- Nuxt 3 already supports TypeScript out of the box
+- Nuxt supports TypeScript out of the box
 - Use `.ts` for stores, services, composables
 - Use `<script setup lang="ts">` in components
 
@@ -249,7 +250,6 @@ Copy these files from `.claude/boilerplates/` into the project root (or `server/
 |----------|-------------|--------------|
 | `server.js` | `server.js` (or `server/server.js`) | Express app with helmet, cors, rate limiting, health endpoint |
 | `utils/errors.js` | `utils/errors.js` | Custom error classes (AppError, ValidationError, NotFoundError, etc.) |
-| `utils/asyncHandler.js` | `utils/asyncHandler.js` | Async route handler wrapper to catch errors |
 | `middleware/errorHandler.js` | `middleware/errorHandler.js` | Centralized error handler |
 | `middleware/authMiddleware.js` | `middleware/authMiddleware.js` | Auth middleware (uses next() for errors) |
 | `middleware/validationMiddleware.js` | `middleware/validationMiddleware.js` | Joi validation helper (routes errors via next()) |
@@ -275,10 +275,10 @@ Use the **Nuxt-specific** API client instead of the Axios-based one:
 
 | Template | Destination | What it does |
 |----------|-------------|--------------|
-| `frontend/nuxt/services/apiClient.js` | `services/apiClient.js` | API client using `$fetch` + `useRuntimeConfig()` (uses `NUXT_PUBLIC_API_URL`) |
-| `frontend/services/exampleService.js` | `services/exampleService.js` | Copy-and-rename service template |
-| `frontend/stores/exampleStore.js` | `stores/exampleStore.js` | Pinia store with loading/error state |
-| `frontend/composables/useLoading.js` | `composables/useLoading.js` | Reusable loading + error composable |
+| `frontend/nuxt/services/apiClient.js` | `app/services/apiClient.js` | API client using `$fetch` + `useRuntimeConfig()` (uses `NUXT_PUBLIC_API_URL`) |
+| `frontend/services/exampleService.js` | `app/services/exampleService.js` | Copy-and-rename service template |
+| `frontend/stores/exampleStore.js` | `app/stores/exampleStore.js` | Pinia store with loading/error state |
+| `frontend/composables/useLoading.js` | `app/composables/useLoading.js` | Reusable loading + error composable |
 
 **Important:** Nuxt projects use `NUXT_PUBLIC_API_URL` via `useRuntimeConfig()` — NOT `import.meta.env.VITE_API_URL`. The Nuxt API client in `.claude/boilerplates/frontend/nuxt/` handles this correctly.
 

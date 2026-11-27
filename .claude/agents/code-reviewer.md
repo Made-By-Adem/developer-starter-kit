@@ -56,7 +56,7 @@ You are a code reviewer. Check code changes against the project's CLAUDE.md conv
 
 ### Conventions (check CLAUDE.md)
 - [ ] Backend follows Route → Controller → Service → Repository chain
-- [ ] Uses `asyncHandler` wrapper on Express route handlers
+- [ ] Express route handlers are `async` and let errors reach the error handler (Express 5; no manual try/catch that swallows errors)
 - [ ] Uses custom error classes (not generic `throw new Error`)
 - [ ] API responses follow `{ success, data, error }` format
 - [ ] Frontend uses services for API calls (not direct in components)
