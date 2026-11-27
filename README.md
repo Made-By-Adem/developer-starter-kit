@@ -19,7 +19,7 @@ You describe what you want in plain English. Claude Code builds it for you — w
 | `CLAUDE.md`    | The project blueprint — tells Claude how to structure code, which conventions to follow, and how to handle security. Copy this into every new project. |
 | `.env.example` | Template for environment variables with comments explaining where to find each value.                                                                   |
 
-### 🤖 13 Specialized AI Agents
+### 🤖 19 Specialized AI Agents
 
 Agents are AI helpers that handle specific tasks. They live in `.claude/agents/` and activate automatically when needed. You don't need to call them by name — just describe what you want and Claude picks the right agent.
 
@@ -34,10 +34,20 @@ Agents are AI helpers that handle specific tasks. They live in `.claude/agents/`
 | 🐛**debugger**              | Finds root causes and fixes bugs                           | *"I get a 500 error when I call POST /api/users"*       |
 | 🔍**code-reviewer**         | Checks quality, security, and conventions                  | *"Review the code you just wrote"*                      |
 | ♻️**refactorer**          | Cleans up code without changing behavior                   | *"Clean up the userService, it's getting messy"*        |
-| 🏎️**performance-checker** | Finds bottlenecks and suggests fixes                       | *"My app feels slow, check for performance issues"*     |
+| 🏎️**perf-audit**          | Finds slow queries, missing indexes and slow frontend code | *"My app feels slow, check for performance issues"*     |
 | 🗃️**migration-risk**      | Assesses database migration safety                         | *(used automatically before database changes)*          |
 | 🧪**test-impact**           | Lists what needs testing after changes                     | *"What should I test after these changes?"*             |
 | 📝**docs-impact**           | Flags documentation that needs updating                    | *(used automatically after code changes)*               |
+| ✍️**doc-writer**           | Writes the documentation updates that docs-impact flagged  | *"Bring the docs in sync with the code"*                |
+| ✅**test-writer**           | Writes and runs tests for new or changed code              | *"Write tests for the order service"*                   |
+| 🛡️**security-auditor**    | Checks the whole codebase for security gaps                | *"Do a security audit before we go live"*               |
+| 🚦**release-risk**          | Assesses the risk of a deployment and how to roll back     | *"What could go wrong when I deploy this?"*             |
+| 📜**log-analyser**          | Finds errors and slow spots in logs you downloaded         | *"Analyse the logs in LOGFILES"*                        |
+| 📊**usage-analyser**        | Shows how people use the app, from the logs                | *"Which features are people not using?"*                |
+
+### 🧰 Complete Claude Code Setup
+
+The [`claude-setup/`](claude-setup/) folder holds a full setup for your own computer: global instructions, 18 skills, 5 slash commands, 3 safety hooks, a status line and VS Code settings. See [`claude-setup/README.md`](claude-setup/README.md).
 
 ### 📁 Boilerplate Templates
 

@@ -5,9 +5,10 @@ tools: Read, Write, Edit, Bash, Grep, Glob
 model: opus
 permissionMode: acceptEdits
 hooks:
-  SubagentStop:
-    - type: command
-      command: "npm audit --audit-level=high 2>/dev/null || true"
+  Stop:
+    - hooks:
+        - type: command
+          command: "npm audit --audit-level=high 2>/dev/null || true"
 ---
 
 You are a project scaffolding specialist. You set up brand new projects from scratch with professional structure, security defaults, and boilerplate. Write all code and comments in English.

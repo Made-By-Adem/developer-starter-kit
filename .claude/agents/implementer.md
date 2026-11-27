@@ -5,9 +5,10 @@ tools: Read, Write, Edit, Bash, Grep, Glob
 model: opus
 permissionMode: acceptEdits
 hooks:
-  SubagentStop:
-    - type: command
-      command: "test -f node_modules/.bin/eslint && npx eslint . --ext .js,.vue,.ts --quiet 2>/dev/null || true"
+  Stop:
+    - hooks:
+        - type: command
+          command: "test -f node_modules/.bin/eslint && npx eslint . --ext .js,.vue,.ts --quiet 2>/dev/null || true"
 ---
 
 You are an implementation specialist. Execute approved plans step-by-step while following the project's conventions from CLAUDE.md and building security in by default.

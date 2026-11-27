@@ -1,0 +1,6 @@
+{
+  "claudeCode.preferredLocation": "panel",
+  "claudeCode.initialPermissionMode": "acceptEdits",
+  "claudeCode.useTerminal": true,
+  "claudeCode.enableNewConversationShortcut": true
+}
