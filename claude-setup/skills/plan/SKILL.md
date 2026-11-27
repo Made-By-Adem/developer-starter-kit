@@ -28,6 +28,7 @@ Before writing ANY code, follow the ACE pipeline to create an approved implement
    - Consume research.md and produce `plan.md` (or the plan-artifact location defined by the project's CLAUDE.md, if it defines one)
    - Sequenced: DB → API → frontend → verification
    - Every step has exact file paths and rollback
+   - A **Done when** section (see below)
 
 6. **Present plan to user**:
    - Show the plan.md summary
@@ -38,9 +39,30 @@ Before writing ANY code, follow the ACE pipeline to create an approved implement
 7. **On approval**: Hand off to implementer agent or proceed manually
 8. **On feedback**: Revise plan and re-present
 
+## Done when
+
+Every plan states, before any code exists, how we will know it is finished. The user approves these criteria together with the plan.
+
+- **Criteria**: each one is a single checkable statement with the proof that will show it. "Works well" is not a criterion. "`GET /api/orders` returns only rows of the caller's tenant — proof: `curl -i` as tenant A and as tenant B" is.
+- **At least one anti-criterion**: something that must NOT happen. Examples: no query without tenant scope, no existing endpoint changes its response shape, no secret in a log line.
+- **Baseline**: what already works and must still work afterwards, and the check that shows it (existing tests, a request recorded before the change).
+- **Proof matches the type of claim**:
+
+| Claim about | Proof |
+|-------------|-------|
+| An endpoint | `curl -i`: status code and body |
+| The database schema or data | A SELECT, or the **db-inspect** skill |
+| A page or component | Opened in a browser, with what was seen |
+| Config or a setting | Read back after writing |
+| Logic | A test that ran, with its output |
+| A deployment | A request to the live address |
+
+Reading the code is not proof that it runs.
+
 ## Rules
 
 - NEVER write code before plan is approved
+- NEVER present a plan without a Done when section
 - NEVER apply migrations automatically
 - Keep plans under 200 lines
 - Agent model tiers are defined by each agent's own frontmatter — do not assume or hardcode a tier here

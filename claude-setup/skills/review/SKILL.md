@@ -47,6 +47,18 @@ Go through each item. If an item doesn't apply, skip it. If it fails, fix it bef
 ### 8. Project-specific checks
 Read the "Review checklist" / domain-critical sections of the project's CLAUDE.md and apply any additional checks defined there (e.g. encryption round-trips, offline flows, payment flows, i18n completeness, multi-tenant scoping).
 
+### 9. Same mistake elsewhere
+- For every defect fixed in this change: one grep for the same pattern in the rest of the codebase
+- List the other places found. Fix them only when they are inside the scope of the task; otherwise report them
+
+### 10. Proof for every claim
+- Every "works", "fixed" or "done" in the summary has proof from this session that fits the claim: endpoint → `curl -i`; schema or data → SELECT; page → browser; config → read back; logic → a test that ran
+- Reading the code is not proof. A claim without proof is reworded to "not verified", with the reason
+
+### 11. Everything that was asked
+- List every explicit request from the user in this task
+- Mark each one: done, skipped (with the reason), or needs the user's decision. Nothing disappears silently
+
 ## Output
 
 After review, present a brief summary:

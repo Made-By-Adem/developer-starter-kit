@@ -47,7 +47,7 @@ Agents are AI helpers that handle specific tasks. They live in `.claude/agents/`
 
 ### 🧰 Complete Claude Code Setup
 
-The [`claude-setup/`](claude-setup/) folder holds a full setup for your own computer: global instructions, 18 skills, 5 slash commands, 3 safety hooks, a status line and VS Code settings. See [`claude-setup/README.md`](claude-setup/README.md).
+The [`claude-setup/`](claude-setup/) folder holds a full setup for your own computer: global instructions, 27 skills, 5 slash commands, 4 hooks, a status line and VS Code settings. See [`claude-setup/README.md`](claude-setup/README.md).
 
 ### 📁 Boilerplate Templates
 

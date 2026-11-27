@@ -19,6 +19,12 @@ Pick the workflow before writing code:
 | Before presenting any code changes | **review** skill checklist |
 | Preparing a PR | **pr** skill |
 | Dependency updates / npm audit findings | **upgrade-deps** skill |
+| Bug with an unknown cause, flaky test, two fixes failed | **science** skill — hypotheses first, then the cheapest test |
+| Incident resolved, or a bug that keeps coming back | **root-cause** skill |
+| New work touching auth, payments, tenant data, uploads, webhooks or AI agents | **threat-model** skill before the plan |
+| Parsers, validators, money/date maths, permission checks with only example tests | **property-test** skill |
+| Choosing between options / attacking a plan / questioning a "must" | **council** / **red-team** / **first-principles** skill |
+| Looking something up on the web / drawing a flow or schema | **research** / **visualize** skill |
 
 When in doubt between feature and hotfix: count the files and the risk surface — schema, auth, encryption, or payments always means the full pipeline.
 
@@ -36,3 +42,5 @@ When in doubt between feature and hotfix: count the files and the risk surface �
 
 - After implementing: verify by exercising the change (run it, hit the endpoint, reproduce the bug), not just by reading the code.
 - Report honestly: failing tests, skipped steps, and deviations get stated plainly.
+- The proof fits the claim: endpoint → `curl -i`; schema or data → SELECT; page → browser; config → read back; logic → a test that ran. No proof in this session means "not verified", never "works".
+- When the same error survives two fixes: stop patching and diagnose again. Never a third patch on the same guess.
