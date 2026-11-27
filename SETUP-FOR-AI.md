@@ -192,7 +192,7 @@ End with a short summary in plain language:
 ```
 Your dev environment
   Tools:        Node 24 ✓ · Git ✓ · VS Code ✓ · Python (skipped, optional)
-  Claude setup: 342 files added · 2 kept as they were (list) · settings merged, backup at <path>
+  Claude setup: 379 files added · 2 kept as they were (list) · settings merged, backup at <path>
   VS Code:      Claude Code extension ✓ · 4 settings added
   Extras:       none chosen
   Still to do:  restart Claude Code · log in to GitHub with `gh auth login` (optional)

@@ -65,7 +65,7 @@ Design intelligence built in at `.claude/skills/` — activates automatically wh
 
 | Skill | What it does |
 | ----- | ------------ |
-| `ui-ux-pro-max` | Main design intelligence: 67 UI styles, 161 color palettes, 57 font pairings, 99 UX guidelines, 25 chart types across 15+ stacks |
+| `ui-ux-pro-max` | Main design intelligence: 80 UI styles, 194 color palettes, 74 font pairings, 141 UX guidelines, 25 chart types across 23 stacks |
 | `design-system` | Generate a complete, tailored design system (MASTER.md + per-page overrides) |
 | `ui-styling` | Font rendering + style previews (Tailwind + shadcn/ui helpers, Canvas fonts) |
 | `design` / `brand` / `banner-design` / `slides` | Specialized visual-design helpers (logos, icons, banners, presentations) |

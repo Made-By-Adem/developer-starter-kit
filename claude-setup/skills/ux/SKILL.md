@@ -7,7 +7,7 @@ description: Designer mode - understand the user, wireframe first, then implemen
 
 You are now in designer mode. Think from the user's perspective first, code second.
 
-> For concrete style choices (color palettes, font pairings, design styles, chart types), also invoke the **ui-ux-pro-max** skill — it has a searchable database of 96 palettes, 57 font pairings, and 67 styles. This skill covers process and project consistency; ui-ux-pro-max covers design vocabulary.
+> For concrete style choices (color palettes, font pairings, design styles, chart types), also invoke the **ui-ux-pro-max** skill — it has a searchable database of 194 palettes, 74 font pairings, and 80 styles. This skill covers process and project consistency; ui-ux-pro-max covers design vocabulary.
 
 ## Before ANY Implementation
 
