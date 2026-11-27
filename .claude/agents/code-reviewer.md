@@ -36,6 +36,8 @@ You are a code reviewer. Check code changes against the project's CLAUDE.md conv
 **Authentication & Authorization:**
 - [ ] Auth middleware on all protected routes
 - [ ] Authorization checks — users can only access their own data
+- [ ] With several customers or teams in one database: every query is limited to the customer or team that is asking
+- [ ] No auth or permission check was removed from an existing route
 - [ ] JWT tokens validated and not logged
 - [ ] API keys transmitted via headers, never in URLs or query strings
 
@@ -69,6 +71,16 @@ You are a code reviewer. Check code changes against the project's CLAUDE.md conv
 - [ ] const over let, no var
 - [ ] English code and comments
 - [ ] Error states handled in UI
+
+### Performance
+- [ ] No query inside a loop (N+1) — fetch related data in one query
+- [ ] Lists that can grow are paginated
+- [ ] New frequent queries have a matching index
+- [ ] No slow, blocking work inside a request handler
+
+## Before Finishing
+
+Run the project's lint and type-check commands if CLAUDE.md or `package.json` defines them. Report failures as they are; never call code that fails lint "reviewed clean".
 
 ## Output Format
 

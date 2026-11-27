@@ -48,6 +48,10 @@ Return immediately with: "This is an empty project. Use the `project-starter` ag
 - Validation: [affected / not affected]
 - State management: [affected / not affected]
 - Routing: [affected / not affected]
+- Data separation between users or customers: [affected / not affected]
+- Scheduled jobs and background tasks: [list if affected]
+- Translations (i18n): [affected / not affected]
+- Documentation: [files that describe what changes]
 
 ### Open Questions
 - [Any ambiguities discovered]
@@ -61,3 +65,5 @@ Return immediately with: "This is an empty project. Use the `project-starter` ag
 - [ ] Check validation schemas
 - [ ] Check shared state (Pinia stores)
 - [ ] List all database tables affected
+- [ ] Check middleware (auth, permissions, validation) on the routes involved
+- [ ] Check scheduled jobs and translation files if the task touches them

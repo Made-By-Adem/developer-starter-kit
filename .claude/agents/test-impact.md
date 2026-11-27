@@ -41,8 +41,15 @@ You are a test analyst. Given code changes, determine what needs testing — inc
 | Scenario | How to test | Expected result |
 |----------|------------|-----------------|
 
+### Automated Tests
+- Existing tests that cover this change: [files, or "None"]
+- Existing tests that will break and need updating: [files, or "None"]
+- New tests worth writing: [what each should prove — the `test-writer` agent can write them]
+
 ### Edge Cases
 - [ ] What if you submit empty input?
+- [ ] What if two users do this at the same time?
+- [ ] With several customers or teams in one database: can one see the other's data?
 - [ ] What if you send a lot of data?
 - [ ] What if the server is down? (offline)
 - [ ] What if the user's session/token expires mid-action?
